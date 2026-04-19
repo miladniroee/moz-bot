@@ -1,0 +1,17 @@
+<?php
+
+namespace App\Utils;
+
+/**
+ * If you want to personalize a text for a specific user, you can do it right here
+ */
+class PersonalizeText
+{
+
+    public static function make(string $userId, string $chatId, string $randomText): string
+    {
+        // code...
+
+        return $randomText;
+    }
+}
