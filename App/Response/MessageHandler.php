@@ -13,6 +13,7 @@ class MessageHandler implements HandlerInterface
     public function __construct(string $message, string $userId, ?string $chat_id = null)
     {
         $this->randomTexts = require_once text_dir('Random');
+        shuffle($this->randomTexts);
         $this->text = self::personalize($userId, $chat_id);
     }
 
