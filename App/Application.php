@@ -23,8 +23,8 @@ class Application
 
                     foreach ($result as $message):
                         $last_offset_id = $message['update_id'] + 1;
-//                        $this->syncUser($message);
-//                        $this->handleMessage($message);
+                        $this->syncUser($message);
+                        $this->handleMessage($message);
                         $this->handleCallback($message);
                     endforeach;
                 } else {
