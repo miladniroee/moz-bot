@@ -1,20 +1,5 @@
 <?php
 
-const APP_DIR = __DIR__;
+require_once __DIR__ . '/App/boot.php';
 
-spl_autoload_register(function ($class) {
-    require_once APP_DIR . '/' . str_replace('\\', '/', $class) . '.php';
-});
-
-function text_dir($filename): string
-{
-    return APP_DIR . DIRECTORY_SEPARATOR . 'App' . DIRECTORY_SEPARATOR . 'Texts' . DIRECTORY_SEPARATOR . $filename . '.php';
-}
-
-function config($key, $default = null)
-{
-    return getenv($key) ?: $default;
-}
-
-
-new \App\Middleware(\App\Application::class);
+new \App\Middleware()->handleRequest();

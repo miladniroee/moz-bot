@@ -6,24 +6,26 @@ use Exception;
 
 class Middleware
 {
-    public function __construct(string $app)
-    {
-        $this->handle();
-        new $app();
-    }
-
-    private function handle(): void
+    public function handleRequest(): void
     {
         self::loadEnv(APP_DIR . '/.env');
 
 
-        if (config('DEV')) return;
+        if (!config('DEV')) {
+            // Check if Sec is provided
+            if (!isset($_GET['sec']) || urldecode($_GET['sec']) !== config('APP_KEY')):
+                error_log("ip: {$_SERVER['REMOTE_ADDR']} | [sec:" . ($_GET['sec'] ?? 'null') . "] provided is wrong");
+                exit();
+            endif;
+        }
 
-        // Check if Sec is provided
-        if (!isset($_GET['sec']) || urldecode($_GET['sec']) !== config('APP_KEY')):
-            error_log("ip: {$_SERVER['REMOTE_ADDR']} | [sec:" . ($_GET['sec'] ?? 'null') . "] provided is wrong");
-            exit();
-        endif;
+        new \App\Application();
+    }
+
+    public function handleCommand():void
+    {
+        global $argv;
+        new \App\Console($argv);
     }
 
     /**
